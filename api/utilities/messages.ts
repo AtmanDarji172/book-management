@@ -1,3 +1,6 @@
+/**
+ * Globalize messages
+ */
 export const MESSAGES = {
     BOOK_NAME_INVALID: 'Book name must be string',
     BOOK_NAME_REQUIRED: 'Book name is required',

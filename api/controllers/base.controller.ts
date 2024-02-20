@@ -9,6 +9,9 @@ export class BaseController {
 
     }
 
+    /**
+     * API's success response prepare and send method
+     */
     public sendSuccessResponse(response: any, data: any, message: string) {
         return response.status(200).json({
             isSuccess: true,
@@ -17,6 +20,9 @@ export class BaseController {
         });
     }
 
+    /**
+     * API's error response prepare and send method
+     */
     public sendErrorResponse(response: any, data: any, message: string, statusCode?: number) {
         return response.status(statusCode || 400).json({
             isSuccess: false,
@@ -25,7 +31,10 @@ export class BaseController {
         });
     }
 
-    public formatePrice(price: number): string {
+    /**
+     * Format price to inr
+     */
+    public formatPrice(price: number): string {
         const formatter = new Intl.NumberFormat('en-IN', {
             style: 'currency',
             currency: 'INR'
@@ -33,6 +42,9 @@ export class BaseController {
         return formatter.format(price);
     }
 
+    /**
+     * Create JWT token
+     */
     public createJWT(user: IUser) {
         /**
          * Created token valid till 1h
@@ -40,7 +52,10 @@ export class BaseController {
         return jwt.sign({ id: user._id }, CONSTANTS.JWT_SECRET, { expiresIn: 60*60 });
     }
 
-    public formatePhone(phone: string): string {
+    /**
+     * Format phone to indian standards
+     */
+    public formatPhone(phone: string): string {
         return `+91 ${phone.slice(0, 5)}-${phone.slice(5)}`;
     }
 }

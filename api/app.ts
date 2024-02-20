@@ -4,16 +4,10 @@ import 'reflect-metadata';
 
 import { Container } from 'inversify';
 import { InversifyExpressServer } from 'inversify-express-utils';
-import mongoose from 'mongoose';
 
-import passport from 'passport';
-import * as passportJWT from 'passport-jwt';
-
-const JwtStrategy = passportJWT.Strategy;
-const ExtractJwt = passportJWT.ExtractJwt;
-
-require('dotenv').config();
-
+import { connectToDB } from './utilities/db';
+import { passportConfiguration } from './middlewares/passport';
+import { DB_CONFIG } from './utilities/config';
 
 /**
  * declare metadata by @controller annotation
@@ -21,8 +15,6 @@ require('dotenv').config();
 import './controllers/book.controller';
 import './controllers/general.controller';
 import './controllers/base.controller';
-import { CONSTANTS } from './utilities/constant';
-import { User } from './models/user';
 
 /**
  * Set up containers
@@ -33,16 +25,9 @@ let container = new Container();
 // container.bind<FooService>('FooService').to(FooService);
 
 /**
- * MongoDB connection using mongoose
+ * Connect to mongoDB using mongoose
  */
-const url: string = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@book-management.sfig0x3.mongodb.net/`;
-mongoose.connect(url, { dbName: 'master' })
-        .then(() => {
-            console.log('Connected to MongoDB');
-        })
-        .catch((error) => {
-            console.error('Error connecting to MongoDB:', error);
-        });
+connectToDB();
 
 /**
  * Create server using InversifyExpressServer
@@ -60,22 +45,10 @@ server.setConfig((app) => {
   });
 });
 server.build()
-      .listen(process.env.PORT || 2000);
-console.log('start on port: ', process.env.PORT)
+      .listen(DB_CONFIG.PORT || 2000);
+console.log('start on port: ', DB_CONFIG.PORT)
 
 /**
- * Passport configuration
+ * Set authentication config using passport
  */
-const passportConfig = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: CONSTANTS.JWT_SECRET
-};
-passport.use(new JwtStrategy(passportConfig, async (payload: any, done) => {
-    // Find user by ID from payload
-    const user = await User.findOne({ _id: payload.id });
-    if (user) {
-        return done(null, user);
-    } else {
-        return done(null, false);
-    }
-}));
+passportConfiguration();
