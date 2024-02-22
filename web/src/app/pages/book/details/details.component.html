@@ -1,0 +1,56 @@
+<div class="wrapper">
+    <div class="page-header page-header-small">
+        <div class="page-header-image rellax-header" data-rellax-speed="-8" style="background-image: url('assets/img/bg11.jpg');">
+        </div>
+        
+        <div class="container">
+            <div class="content-center">
+                <h1 class="title">{{ bookDetails?.name }}</h1>
+                <div class="text-center" *ngIf="isLoggedIn">
+                  <a (click)="addEditBook(-1)" class="btn btn-success btn-icon btn-round mr-2" title="Add Book">
+                    <i class="fa fa-plus m-t-10"></i>
+                  </a>
+                  <a (click)="addEditBook(bookDetails?._id)" class="btn btn-info btn-icon btn-round mr-2" title="Edit Book">
+                    <i class="fa fa-edit m-t-10"></i>
+                  </a>
+                  <a (click)="deleteBook(deleteBookConfirmation)" class="btn btn-danger btn-icon btn-round" title="Delete Book">
+                    <i class="fa fa-trash-alt m-t-10"></i>
+                  </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section section-about-us">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto text-center">
+                    <h2 class="title">Description</h2>
+                    <h5 class="description justify">{{ bookDetails?.description }}</h5>
+                </div>
+
+                <div class="col-md-8 ml-auto mr-auto text-center">
+                    <h2 class="title">Other Details</h2>
+                    <h5 class="text-left"><span class="text-primary">Author:&nbsp;</span><span>{{ bookDetails?.author }}</span></h5>
+                    <h5 class="text-left"><span class="text-primary">Price:&nbsp;</span><span>{{ bookDetails?.formatted_price }}</span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #deleteBookConfirmation let-c="close" let-d="dismiss">
+    <div class="modal-header justify-content-center">
+        <button type="button" class="close" (click)="d('Cross click')">
+            <i class="now-ui-icons ui-1_simple-remove"></i>
+        </button>
+        <h4 class="title title-up">Book Deletion Confirmation</h4>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete this <span class="text-primary">{{ bookDetails?.name }}</span> book?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="c('Confirm')" title="Confirm">Confirm</button>
+        <button type="button" class="btn btn-danger" (click)="c('Close click')" title="Cancel">Cancel</button>
+    </div>
+</ng-template>

@@ -1,0 +1,88 @@
+<div class="wrapper">
+    <div class="page-header page-header-small">
+        <div class="page-header-image rellax-header" data-rellax-speed="-8" style="background-image: url('assets/img/bg6.jpg');">
+        </div>
+        <div class="container">
+            <div class="content-center">
+                <h1 class="title">{{ bookId != '-1' ? 'Edit' : 'Add New' }} Book</h1>
+            </div>
+        </div>
+    </div>
+    <div class="section section-contact-us text-center">
+        <div class="container">
+            <!-- <h2 class="title">{{ bookId != '-1' ? 'Edit' : 'Add' }} Book</h2> -->
+            <!-- <p class="description">Your project is very important to us.</p> -->
+            <div class="row">
+                <div class="col-lg-6 text-center col-md-8 ml-auto mr-auto">
+                    <form class="form" (ngSubmit)="onSubmit()" [formGroup]="myForm">
+                        <div class="input-group input-lg" [ngClass]="{'input-group-focus':focus===true}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="now-ui-icons education_paper"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Name..." formControlName="name" (focus)="focus=true" (blur)="focus=false">
+                        </div>
+                        <div class="text-danger text-left mb-2 m-l-45" *ngIf="(myForm.controls.name.touched || submitted) && myForm.controls.name.invalid">
+                            <div *ngIf="myForm.controls.name.errors?.required || myForm.controls.name.errors?.whitespace">
+                                Name is required
+                            </div>
+                        </div>
+    
+                        <div class="input-group input-lg" [ngClass]="{'input-group-focus':focus1===true}">
+                            <div class="input-group-prepend" >
+                                <span class="input-group-text">
+                                    <i class="now-ui-icons users_circle-08"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Author..." formControlName="author" (focus)="focus1=true" (blur)="focus1=false">
+                        </div>
+                        <div class="text-danger text-left mb-2 m-l-45" *ngIf="(myForm.controls.author.touched || submitted) && myForm.controls.author.invalid">
+                            <div *ngIf="myForm.controls.author.errors?.required || myForm.controls.author.errors?.whitespace">
+                                Author is required
+                            </div>
+                        </div>
+    
+                        <div class="input-group input-lg" [ngClass]="{'input-group-focus':focus2===true}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="now-ui-icons business_money-coins"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Price..." (keypress)="numberOnly($event)" formControlName="price" (focus)="focus2=true" (blur)="focus2=false">
+                        </div>
+                        <div class="text-danger text-left mb-2 m-l-45" *ngIf="(myForm.controls.price.touched || submitted) && myForm.controls.price.invalid">
+                            <div *ngIf="myForm.controls.price.errors?.required || myForm.controls.price.errors?.whitespace">
+                                Price is required
+                            </div>
+                        </div>
+
+                        <!-- <div class="input-group input-lg" [ngClass]="{'input-group-focus':focus3===true}">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="now-ui-icons arrows-1_cloud-upload-94"></i>
+                                </div>
+                            </div>
+                            <input id="file-upload" type="file" class="form-control" formControlName="image" ng2FileSelect
+                                [uploader]="uploader" (onFileSelected)="uploadMyData($event)" />
+                        </div> -->
+    
+                        <div class="textarea-container">
+                            <textarea class="form-control" name="name" rows="4" cols="80" formControlName="description" placeholder="Description..."></textarea>
+                        </div>
+                        <div class="text-danger text-left mb-2 m-l-45" *ngIf="(myForm.controls.description.touched || submitted) && myForm.controls.description.invalid">
+                            <div *ngIf="myForm.controls.description.errors?.required || myForm.controls.description.errors?.whitespace">
+                                Description is required
+                            </div>
+                        </div>
+
+                        <div class="send-button">
+                            <button type="submit" class="btn btn-primary btn-round btn-block btn-lg">{{ bookId != '-1' ? 'Update' : 'Submit' }}</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

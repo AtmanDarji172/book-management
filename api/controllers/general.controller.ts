@@ -24,7 +24,7 @@ export class GeneralController extends BaseController {
     /**
      * API endpoint to login
      */
-    @httpPost('/login')
+    @httpPost('login')
     public async login(@request() req: express.Request, @response() res: express.Response): Promise<any> {
         /**
          * Validate requested body params using JOI
@@ -79,7 +79,7 @@ export class GeneralController extends BaseController {
         }
     }
 
-    @httpPost('/register')
+    @httpPost('register')
     public async register(@request() req: express.Request, @response() res: express.Response): Promise<any> {
         /**
          * Validate requested body params using JOI
@@ -138,7 +138,7 @@ export class GeneralController extends BaseController {
                 last_name: reqBody.last_name,
                 phone: reqBody.phone,
                 email: reqBody.email,
-                password: bcrypt.hash(reqBody.password, 10), // encrypt the password using bcrypt hash method
+                password: await bcrypt.hash(reqBody.password, 10), // encrypt the password using bcrypt hash method
                 formatted_phone: this.formatPhone(reqBody.phone)
             });
 

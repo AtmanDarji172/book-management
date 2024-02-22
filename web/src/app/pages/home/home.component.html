@@ -1,0 +1,23 @@
+<div class="wrapper">
+    <div class="section section-team text-center">
+        <div class="container">
+            <div class="team">
+                <div class="row">
+                    <ng-container *ngFor="let book of bookList">
+                        <div class="col-md-3 mr-4 ml-5 card">
+                            <div class="team-player">
+                                <!-- <img src="assets/img/avatar.jpg" alt="Thumbnail Image" class="rounded img-fluid img-raised mt-4"> -->
+                                <h4 class="title cursor" (click)="goToBookDetails(book?._id)" [title]="book?.name">{{ book?.name }}</h4>
+                                <p class="category text-primary">{{ book?.author }}</p>
+                                <p class="description justify">
+                                    {{ book?.description?.length > 100 ? book?.description?.substring(0, 100) + '...' : book?.description }}
+                                </p>
+                                <p class="text-primary text-right fs-20">{{ book?.formatted_price }}</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

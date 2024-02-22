@@ -44,11 +44,14 @@ export const MESSAGES = {
     FIND_DUPLICATE_USER: 'Duplicate user find. Please check for other',
     USER_CREATED_SUCCESS: 'User created successfully',
     USER_FETCHED_SUCCESS: 'Users fetched successfully',
-    USER_UPDATED_SUCCESS: 'User updated successfully',
+    USER_UPDATED_SUCCESS: 'Profile details updated successfully',
     USER_DELETED_SUCCESS: 'User deleted successfully',
     USER_DETAILS_FETCHED_SUCCESS: 'User details fetched successfully',
     USER_FETCHED_ERROR: 'Unable to fetch user. Please try again!',
     INVALID_USER_ID: 'User id is not valid',
-    LOGIN_SUCCESS: 'Login successful',
-    REGISTRATION_SUCCESS: 'Registration done successfully'
+    LOGIN_SUCCESS: 'Sign in successful',
+    REGISTRATION_SUCCESS: 'Sign up successfully',
+    PROFILE_FETCH_SUCCESS: 'Profile details fetched successfully',
+    FILE_REQUIRED: 'Image file is required',
+    FILE_UPLOAD_ERROR: 'Error uploading file'
 };

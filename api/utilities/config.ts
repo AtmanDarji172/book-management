@@ -10,3 +10,7 @@ export const DB_CONFIG = {
     HOST_NAME: process.env.HOST_NAME,
     PORT: process.env.PORT
 }
+
+export const STORAGE = {
+    BUCKET_NAME: process.env.BUCKET_NAME
+}

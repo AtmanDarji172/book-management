@@ -8,6 +8,7 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 import { connectToDB } from './utilities/db';
 import { passportConfiguration } from './middlewares/passport';
 import { DB_CONFIG } from './utilities/config';
+import cors from 'cors';
 
 /**
  * declare metadata by @controller annotation
@@ -15,6 +16,7 @@ import { DB_CONFIG } from './utilities/config';
 import './controllers/book.controller';
 import './controllers/general.controller';
 import './controllers/base.controller';
+import './controllers/user.controller';
 
 /**
  * Set up containers
@@ -34,15 +36,18 @@ connectToDB();
  */
 let server = new InversifyExpressServer(container);
 server.setConfig((app) => {
-  // add body parser
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json());
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, UPDATE');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
+    // add body parser
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, PUT, POST, DELETE, UPDATE');
+        next();
+    });
+    // Enable CORS
+    app.use(cors());
 });
 server.build()
       .listen(DB_CONFIG.PORT || 2000);

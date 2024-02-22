@@ -58,4 +58,11 @@ export class BaseController {
     public formatPhone(phone: string): string {
         return `+91 ${phone.slice(0, 5)}-${phone.slice(5)}`;
     }
+
+    /**
+     * Convert book file name
+     */
+    public getBookFileName(originalname: any): string {
+        return `${Date.now()}-${originalname}`
+    }
 }

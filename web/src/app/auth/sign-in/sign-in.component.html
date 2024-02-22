@@ -1,0 +1,61 @@
+
+<div class="page-header" filter-color="orange">
+    <div class="page-header-image" style="background-image:url(assets/img/login.jpg)"></div>
+    <div class="container">
+        <div class="col-md-4 content-center">
+            <div class="card card-login card-plain">
+                <form class="form" (ngSubmit)="onSubmit()" [formGroup]="myForm">
+                    <div class="header header-primary text-center">
+                        <div class="logo-container">
+                            <img src="assets/img/now-logo.png" alt="">
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Email..." formControlName="email" (focus)="focus=true" (blur)="focus=false">
+                        </div>
+                        <div class="text-danger text-left mb-2" *ngIf="(myForm.controls.email.touched || submitted) && myForm.controls.email.invalid">
+                            <div *ngIf="myForm.controls.email.errors?.required || myForm.controls.email.errors?.whitespace">
+                                Email is required
+                            </div>
+                            <div *ngIf="myForm.controls.email.errors?.pattern">
+                                Email is not a valid email
+                            </div>
+                        </div>
+
+                        <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="now-ui-icons ui-1_lock-circle-open"></i></span>
+                            </div>
+                            <input type="password" placeholder="Password..." class="form-control" formControlName="password" (focus)="focus1=true" (blur)="focus1=false"/>
+                        </div>
+                        <div class="text-danger text-left" *ngIf="(myForm.controls.password.touched || submitted) && myForm.controls.password.invalid">
+                            <div *ngIf="myForm.controls.password.errors?.required || myForm.controls.password.errors?.whitespace">
+                                Password is required
+                            </div>
+                            <div *ngIf="myForm.controls.password.errors?.pattern">
+                                Password must contain at least 8 characters, including at least one letter and one number
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer text-center">
+                        <button type="submit" class="btn btn-primary btn-round btn-lg btn-block" title="Sign In">Sign In</button>
+                    </div>
+                    <div class="pull-left">
+                        <h6>
+                            <a class="link cursor" (click)="goToRegister()" title="Create Account">Create Account</a>
+                        </h6>
+                    </div>
+                    <div class="pull-right">
+                        <!-- <h6>
+                            <a href="#pablo" class="link">Need Help?</a>
+                        </h6> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

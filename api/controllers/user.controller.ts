@@ -91,6 +91,12 @@ export class UsersController extends BaseController {
                 'any.required': MESSAGES.PHONE_REQUIRED,
                 'string.pattern.base': MESSAGES.PHONE_INVALID_PATTERN
             }),
+            email: joi.string().trim().email({ minDomainSegments: 2 }).required().messages({
+                'string.base': MESSAGES.EMAIL_INVALID,
+                'any.required': MESSAGES.EMAIL_REQUIRED,
+                'string.trim': MESSAGES.EMAIL_EMPTY,
+                'string.email': MESSAGES.EMAIL_VALID_EMAIL
+            }),
         });
 
         const validateSchema = schema.validate(req.body, { abortEarly: false });
@@ -103,7 +109,7 @@ export class UsersController extends BaseController {
         /**
          * Check if any duplicate user exist
          */
-        const findDuplicateUser = await User.findOne({ email: reqBody?.email }, { $ne: { _id: req.params.id } });
+        const findDuplicateUser = await User.findOne({ email: reqBody?.email, _id: { $ne: req.params.id } });
         if (findDuplicateUser) {
             return this.sendErrorResponse(res, null, MESSAGES.FIND_DUPLICATE_USER);
         }
@@ -159,6 +165,30 @@ export class UsersController extends BaseController {
              */
             await User.findOneAndDelete({ _id: req.params.id });
             return this.sendSuccessResponse(res, null, MESSAGES.USER_DELETED_SUCCESS);
+        
+        } catch (error: any) {
+            return this.sendErrorResponse(res, null, error.message);
+        }
+    }
+
+    /**
+     * API endpoint to fetch current user profile
+     */
+    @httpGet('/my-profile')
+    public async getProfileDetails(@request() req: express.Request, @response() res: express.Response): Promise<any> {
+        let reqUser: any = req.user;
+ 
+        try {
+            /**
+             * Check if requested user is exist or not
+             */
+            const findUser = await User.findOne({ _id: reqUser._id }, { password: 0 });
+            if (!findUser) {
+                return this.sendErrorResponse(res, null, MESSAGES.USER_FETCHED_ERROR);
+            }
+
+            delete findUser?.password;
+            return this.sendSuccessResponse(res, findUser, MESSAGES.PROFILE_FETCH_SUCCESS);
         
         } catch (error: any) {
             return this.sendErrorResponse(res, null, error.message);

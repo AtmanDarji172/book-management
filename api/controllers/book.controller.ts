@@ -6,7 +6,9 @@ import { MESSAGES } from '../utilities/messages';
 import { Book } from '../models/book';
 import { isValidObjectId } from 'mongoose';
 import { authenticateJwt } from '../middlewares/passport';
-
+import { singleUpload, storageClient } from '../middlewares/file-upload';
+import fs from 'fs';
+import path from 'path';
 @controller('/books')
 export class BooksController extends BaseController {
     constructor() {
@@ -173,7 +175,7 @@ export class BooksController extends BaseController {
         /**
          * Check if any duplicate book exist
          */
-        const findDuplicateBook = await Book.findOne({ name: new RegExp(reqBody?.name, 'gi'), $ne: { _id: req.params.id } });
+        const findDuplicateBook = await Book.findOne({ name: new RegExp(reqBody?.name, 'gi'), _id: { $ne: req.params.id } });
         if (findDuplicateBook) {
             return this.sendErrorResponse(res, null, MESSAGES.FIND_DUPLICATE_BOOK);
         }
